@@ -11,6 +11,12 @@ fi
 echo "Ensuring hostname is 'k8s-template'"
 echo "k8s-template" | sudo tee /etc/hostname > /dev/null
 
+echo "Updating /etc/hosts"
+sudo tee /etc/hosts << EOF
+127.0.0.1	localhost
+127.0.0.1	k8s-template.internal.curnowtopia.com	k8s-template
+EOF
+
 echo "Clearing the machine id"
 sudo tee /etc/machine-id < /dev/null > /dev/null
 
@@ -35,7 +41,6 @@ echo "Clearing bcurnow configuration and history"
 sudo rm -rf /home/bcurnow/.ssh/
 sudo rm -rf /home/bcurnow/anaconda-ks.cfg
 sudo rm -rf /home/bcurnow/.bash_history
-history -c
 
 echo "Clearing root configuration and history"
 sudo rm -rf /root/.ssh/
