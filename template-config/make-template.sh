@@ -8,13 +8,13 @@ then
   exit 1
 fi
 
-echo "Ensuring hostname is 'k8s-template'"
-echo "k8s-template" | sudo tee /etc/hostname > /dev/null
+echo "Ensuring hostname is 'debian-template'"
+echo "debian-template" | sudo tee /etc/hostname > /dev/null
 
 echo "Updating /etc/hosts"
 sudo tee /etc/hosts << EOF
 127.0.0.1	localhost
-127.0.0.1	k8s-template.internal.curnowtopia.com	k8s-template
+127.0.0.1	debian-template.internal.curnowtopia.com	debian-template
 EOF
 
 echo "Clearing the machine id"
