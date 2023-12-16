@@ -1,31 +1,45 @@
 #!/bin/bash
 
+function backupFiles() {
+  local config=$1
+
+  for entry in $(cat ${backupConfigDir}/${config})
+  do
+    echo -n "${backupConfigDir}/${config} - Backing up '${entry}' using '${rsyncFlags}'..."
+    backupOutput=$(rsync ${rsyncFlags} ${entry} ${backupUser}@${backupHost}::${backupModule} 2>&1)
+    if [ 0 -eq $? ]
+    then
+      echo "complete"
+    else
+      echo "failed!"
+      echo ${backupOutput}
+    fi
+  done
+}
+
+if [ $UID -ne 0 ]
+then
+  echo "You must run this as root" >&2
+  exit 1
+fi
+
+backupConfig=$1
 backupUser=backup
 backupPasswordFile=/etc/backup/passwd
 backupHost=backup.internal.curnowtopia.com
 currentHost=$(hostname)
 backupModule=backup-${currentHost}
-backupConfig=/etc/backup/backup.d
+backupConfigDir=/etc/backup/backup.d
 rsyncFlags="--password-file ${backupPasswordFile} -aqc --perms --delete-after --relative"
 
 echo "Backing up ${currentHost} to ${backupModule} on ${backupHost}"
-
-exitCode=0
-
-for config in $(ls -1 ${backupConfig})
-do
-  echo "Processing config entry '${backupConfig}/${config}'"
-  for entry in $(cat ${backupConfig}/${config})
+if [ -n "${backupConfig}" ]
+then
+  backupFiles ${backupConfig}
+else
+ for backupConfig in $(ls -1 ${backupConfigDir})
   do
-    echo -n "Backing up '${entry}' using '${rsyncFlags}'..."
-    ret=$(rsync ${rsyncFlags} ${entry} ${backupUser}@${backupHost}::${backupModule} 2>&1)
-    if [ $? -eq 0 ]
-    then
-      echo "complete"
-    else
-      echo "failed!"
-      echo ${ret}
-      exitCode=1
-    fi
+    backupFiles ${backupConfig}
   done
-done
+fi
+
