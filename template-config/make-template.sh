@@ -12,6 +12,43 @@ then
   exit 1
 fi
 
+echo "Checking /opt/template-config scripts for changes"
+mkdir -p /tmp/template-config
+curl --silent -o /tmp/template-config/make-template.sh --location  https://github.com/bcurnow/utils/raw/main/template-config/make-template.sh
+if [ $? -ne 0 ]
+then
+  echo "Download of make-template.sh failed" >&2
+  exit 1
+fi
+curl --silent -o /tmp/template-config/config-template.sh --location  https://github.com/bcurnow/utils/raw/main/template-config/config-template.sh
+if [ $? -ne 0 ]
+then
+  echo "Download of config-template.sh failed" >&2
+  exit 1
+fi
+
+scripts_changed=false
+diff /opt/template-config/make-template.sh /tmp/template-config/make-template.sh
+if [ $? -ne 0 ]
+then
+  scripts_changed=true
+fi
+
+diff /opt/template-config/config-template.sh /tmp/template-config/config-template.sh
+if [ $? -ne 0 ]
+then
+  scripts_changed=true
+fi
+
+echo "Clearing /opt/template-config"
+if ! scripts_changed
+then
+  echo "/opt/template-config scripts changes, can not make templates until the content is synced with GitHub" >&2
+  exit 1
+fi
+
+exit 0
+
 echo "Ensuring hostname is 'debian-template'"
 echo "debian-template" | sudo tee /etc/hostname > /dev/null
 
