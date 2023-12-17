@@ -28,26 +28,27 @@ then
 fi
 
 scripts_changed=false
-diff /opt/template-config/make-template.sh /tmp/template-config/make-template.sh
+diff /opt/template-config/make-template.sh /tmp/template-config/make-template.sh >/dev/null
 if [ $? -ne 0 ]
 then
   scripts_changed=true
 fi
 
-diff /opt/template-config/config-template.sh /tmp/template-config/config-template.sh
+diff /opt/template-config/config-template.sh /tmp/template-config/config-template.sh >/dev/null
 if [ $? -ne 0 ]
 then
   scripts_changed=true
 fi
 
-echo "Clearing /opt/template-config"
-if ! scripts_changed
+if ${scripts_changed}
 then
   echo "/opt/template-config scripts changes, can not make templates until the content is synced with GitHub" >&2
   exit 1
 fi
 
+echo "Clearing /opt/template-config"
 exit 0
+rm -r /opt/template-config
 
 echo "Ensuring hostname is 'debian-template'"
 echo "debian-template" | sudo tee /etc/hostname > /dev/null
