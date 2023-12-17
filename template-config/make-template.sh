@@ -40,6 +40,7 @@ then
   scripts_changed=true
 fi
 
+rm -rf /tmp/template-config
 if ${scripts_changed}
 then
   echo "/opt/template-config scripts changes, can not make templates until the content is synced with GitHub" >&2
@@ -47,7 +48,7 @@ then
 fi
 
 echo "Clearing /opt/template-config"
-rm -r /opt/template-config
+sudo rm -rf /opt/template-config
 
 echo "Ensuring hostname is 'debian-template'"
 echo "debian-template" | sudo tee /etc/hostname > /dev/null
@@ -128,6 +129,8 @@ sudo rm -f /var/log/yum.log
 sudo rm -f /var/log/audit/audit.log
 sudo rm -f /var/log/ovirt-guest-agent/ovirt-guest-agent.log
 sudo rm -f /var/log/tuned/tuned.log
+
+read -p "Press any key to shutdown" -n 1 -r
 
 echo "Shutting down"
 sudo /usr/sbin/shutdown now
