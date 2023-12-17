@@ -80,8 +80,10 @@ sudo rm -f /etc/ssh/ssh_host_*
 
 echo "Clearing bcurnow configuration and history"
 rm -rf /home/bcurnow/.ssh/
-rm -rf /home/bcurnow/anaconda-ks.cfg
-rm -rf /home/bcurnow/.bash_history
+rm -f /home/bcurnow/anaconda-ks.cfg
+rm -f /home/bcurnow/.bash_history
+rm -f /home/bcurnow/.lesshst
+rm -rf /home/bcurnow/.local
 
 # Setup authorized key login for the bcurnow user
 mkdir -p /home/bcurnow/.ssh
@@ -92,13 +94,17 @@ EOF
 
 echo "Clearing root configuration and history"
 sudo rm -rf /root/.ssh/
-sudo rm -rf /root/anaconda-ks.cfg
-sudo rm -rf /root/.bash_history
+sudo rm -f /root/anaconda-ks.cfg
+sudo rm -f /root/.bash_history
+sudo rm -f /root/.lesshst
+sudo rm -rf /root/.local
 
 echo "Clearing ansible configuration and history"
-sudo rm -rf /home/ansible/.ssh/known_hosts
-sudo rm -rf /home/ansible/anaconda-ks.cfg
-sudo rm -rf /home/ansible/.bash_history
+sudo rm -f /home/ansible/.ssh/known_hosts
+sudo rm -f /home/ansible/anaconda-ks.cfg
+sudo rm -f /home/ansible/.bash_history
+sudo rm -f /home/ansible/.lesshst
+sudo rm -rf /home/ansible/.local
 
 echo "Clearing apt caches"
 sudo apt-get autoremove -y
