@@ -262,3 +262,10 @@ echo "Domains=${domain}" >> /etc/systemd/resolved.conf
 
 echo "Regenerating SSH host keys"
 ssh-keygen -A
+
+echo "Cleaning out /opt/template-config"
+rm -rf /opt/template-config
+
+read -p "Press any key to reboot..." -n 1 -r
+
+reboot
