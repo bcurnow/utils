@@ -185,6 +185,12 @@ check_dns_servers () {
   return 0
 }
 
+if [ ${EUID} -ne 0 ]
+then
+  echo "You must run as root" >&2
+  exit 1
+fi
+
 dns_servers="10.0.0.100 10.0.0.200"
 gateway=10.0.0.1
 broadcast=10.255.255.255
