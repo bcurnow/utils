@@ -47,7 +47,6 @@ then
 fi
 
 echo "Clearing /opt/template-config"
-exit 0
 rm -r /opt/template-config
 
 echo "Ensuring hostname is 'debian-template'"
