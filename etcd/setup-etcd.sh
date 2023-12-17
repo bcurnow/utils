@@ -58,11 +58,11 @@ prompt "Enter the etcd vesion" etcd_version ${etcd_version}
 prompt "Enter the etcd download URL" etcd_url ${etcd_url}
 
 echo "Installing etcd ${etcd_version} in /usr/bin"
-etcd_temp_dir=/tmp/etcd-v${etcd_version}-temp
+adduser --quiet --comment "etcd user" --home /var/lib/etcd --no-create-home --shell /bin/false --disabled-password etcd
 
+etcd_temp_dir=/tmp/etcd-v${etcd_version}-temp
 rm -rf ${etcd_temp_dir}
 mkdir -p ${etcd_temp_dir}
-
 curl --silent --location ${etcd_url}/v${etcd_version}/etcd-v${etcd_version}-linux-amd64.tar.gz -o ${etcd_temp_dir}/etcd-v${etcd_version}-linux-amd64.tar.gz
 tar xzf ${etcd_temp_dir}/etcd-v${etcd_version}-linux-amd64.tar.gz -C ${etcd_temp_dir} --strip-components=1
 rm -f ${etcd_temp_dir}/etcd-v${etcd_version}-linux-amd64.tar.gz
