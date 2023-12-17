@@ -53,7 +53,8 @@ ansible ALL=(ALL) NOPASSWD: ALL
 EOF
 
 echo "Setting up certificate login for ansible user"
-mkdir -p /home/ansible/.ssh/
+sudo mkdir -p /home/ansible/.ssh/
+chmod 500 /home/ansible/.ssh/
 sudo tee /home/ansible/.ssh/authorized_keys >/dev/null <<EOF
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDI/D0pCrYAm2YLhG0mjxo3UCFYJu/UqByGqcXg6T8eXb0Ctcy4kB1KAdWi6S/rSurw0Ph6MXDV6U9yIwBHjXmWfsqAKPJyHyKWZliZAmcmME0sTg7j3QGpyUtI83ufe/Ic9jSzQjLz6/pTaV+A68ppySlK2bwmJz/wYBkxgOu1sfGm8QdTI8uVtkHtaJQEBywkLNgkVfdmPrfnUd8g3zpWtXupWygJxN4TuMY3EASzeaCTSu3l3S8RHUFVjN6YQkbHT7D1KVxrzxpdTPOrwkwcOL5u2392l0fQ8h+Iz9PHd/IXahf7J11tuXjlw/CklyyiN5x+i+c8lFrlqTqmv5ld05O1ImYA6ObZ7wGgDgTFkDpczdhO7z6fWCg8SKOSHty4GRbjbBJWWi2c31hn/wbFNax6+pbYhAL8G+oMRn1qqUU5HSFYb6o/iL75u5gKZeKYaubTyEqV+aREAgSlPP16gfSX1IhcPMjm9zoF/VUCiXzfF1e/tdBAN3efPrB6B/8= Ansible ssh login key
 EOF
@@ -75,7 +76,7 @@ then
   # Only cleanup the script if everything was successful
   rm /tmp/${username}@${hostname}.bootstrap
 else
-  echo "Bootstrap script failed, see /tmp/${username}@${hostname}.bootstrap and above" >&s
+  echo "Bootstrap script failed, see /tmp/${username}@${hostname}.bootstrap and above" >&2
   exit 1
 fi
 
