@@ -130,7 +130,7 @@ sudo rm -f /var/log/audit/audit.log
 sudo rm -f /var/log/ovirt-guest-agent/ovirt-guest-agent.log
 sudo rm -f /var/log/tuned/tuned.log
 
-read -p "Press any key to shutdown" -n 1 -r
+read -p "Press any key to shutdown..." -n 1 -r
 
 echo "Shutting down"
 sudo /usr/sbin/shutdown now
