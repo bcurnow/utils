@@ -64,7 +64,7 @@ ssh ${username}@${hostname} 'bash -s' < /tmp/${username}@${hostname}.bootstrap
 if [ $? -eq 0 ]
 then
   echo "Bootstrap script successful, validating setup"
-  ssh ansible@${hostname} -i /opt/ansible/.ssh/id_rsa "echo "Setup validated"
+  ssh ansible@${hostname} -i /opt/ansible/.ssh/id_rsa 'echo "Setup validated"'
 
   if [ $? -ne 0 ]
   then
