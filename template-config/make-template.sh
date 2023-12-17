@@ -95,6 +95,11 @@ sudo rm -rf /root/.ssh/
 sudo rm -rf /root/anaconda-ks.cfg
 sudo rm -rf /root/.bash_history
 
+echo "Clearing ansible configuration and history"
+sudo rm -rf /home/ansible/.ssh/known_hosts
+sudo rm -rf /home/ansible/anaconda-ks.cfg
+sudo rm -rf /home/ansible/.bash_history
+
 echo "Clearing apt caches"
 sudo apt-get autoremove -y
 sudo apt-get clean -y
