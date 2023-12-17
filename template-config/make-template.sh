@@ -51,22 +51,22 @@ echo "Clearing /opt/template-config"
 sudo rm -rf /opt/template-config
 
 echo "Ensuring hostname is 'debian-template'"
-echo "debian-template" | sudo tee /etc/hostname > /dev/null
+echo "debian-template" | sudo tee /etc/hostname >/dev/null
 
 echo "Updating /etc/hosts"
-sudo tee /etc/hosts << EOF
+sudo tee /etc/hosts >/dev/null << EOF
 127.0.0.1	localhost
 127.0.0.1	debian-template.internal.curnowtopia.com	debian-template
 EOF
 
 echo "Clearing the machine id"
-sudo tee /etc/machine-id < /dev/null > /dev/null
+sudo tee /etc/machine-id >/dev/null </dev/null
 
 echo "Removing systemd-networkd configurations"
 sudo rm /etc/systemd/network/*.network
 
 echo "Setting up DHCP systemd-networkd configuration"
-sudo tee /etc/systemd/network/template.network > /dev/null << EOF
+sudo tee /etc/systemd/network/template.network >/dev/null << EOF
 [Match]
 Name=ens18
 
