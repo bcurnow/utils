@@ -48,10 +48,12 @@ then
 fi
 
 node_name=$(hostname --short) 
+node_ip=$(hostname -I)
 fqdn=$(hostname --long) 
 etcd_version=3.5.11
 etcd_url=https://github.com/etcd-io/etcd/releases/download
 
+prompt "Enter the node IP" node_ip ${node_ip}
 prompt "Enter the node name" node_name ${node_name}
 prompt "Enter the FQDN" fqdn ${fqdn}
 prompt "Enter the etcd vesion" etcd_version ${etcd_version}
@@ -121,8 +123,8 @@ discovery-srv: k8setcd.internal.curnowtopia.com
 initial-cluster-token: k8setcd-cluster
 initial-cluster-state: new
 initial-advertise-peer-urls: https://${fqdn}:2380 
-listen-peer-urls: https://10.10.10.30:2380
-listen-client-urls: https://10.10.10.30:2379,https://127.0.0.1:2379
+listen-peer-urls: https://${node_ip}:2380
+listen-client-urls: https://${node_ip}:2379,https://127.0.0.1:2379
 advertise-client-urls: https://${fqdn}:2379
 tls-min-version: 'TLS1.3'
 client-transport-security:
