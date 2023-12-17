@@ -7,7 +7,7 @@ then
   echo "This script must not be run as root" >&2
   echo "Please ensure the following commands are run as the non-root user before executing:"
   echo "  set +o history # Turns off history for the current shell"
-  echo "  history -c     # Clears current history
+  echo "  history -c     # Clears current history"
   echo "This will ensure there's no extraneous command history when the template is cloned"
   exit 1
 fi
