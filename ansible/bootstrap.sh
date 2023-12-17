@@ -74,7 +74,7 @@ then
   # Only cleanup the script if everything was successful
   rm /tmp/${username}@${hostname}.bootstrap
 else
-  echo "Bootstrap script failed, see /tmp/${username}@${hostname}.bootstrap and log above >&s
+  echo "Bootstrap script failed, see /tmp/${username}@${hostname}.bootstrap and above" >&s
   exit 1
 fi
 
