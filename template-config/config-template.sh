@@ -196,14 +196,13 @@ gateway=10.0.0.1
 broadcast=10.255.255.255
 domain=internal.curnowtopia.com
 
-
+prompt "Enter the new hostname" hostname
 prompt "Enter the new IP address" ip_addr check_ip_addr
 prompt "Enter the IP prefix length" ip_prefix check_ip_prefix "8"
 prompt "Enter the gatway address" gateway check_ip_addr "${gateway}"
 prompt "Enter the broadcast address" broadcast check_ip_addr "${broadcast}"
 prompt "Enter the DNS servers" dns_servers check_dns_servers "${dns_servers}"
 prompt "Enter the DNS search domain" domain check_yes "${domain}"
-prompt "Enter the new hostname" hostname
 echo "---"
 echo "New VM config:"
 echo "  IP Address: ${ip_addr}/${ip_prefix}"
