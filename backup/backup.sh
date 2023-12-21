@@ -6,7 +6,7 @@ function backupFiles() {
   for entry in $(cat ${backupConfigDir}/${config})
   do
     echo -n "${backupConfigDir}/${config} - Backing up '${entry}' using '${rsyncFlags}'..."
-    backupOutput=$(rsync ${rsyncFlags} ${entry} ${backupUser}@${backupHost}::${backupModule} 2>&1)
+    backupOutput=$(rsync ${rsyncFlags} ${entry} ${backupUser}@${backupHost}::${backupModule}/${currentHost}/ 2>&1)
     if [ 0 -eq $? ]
     then
       echo "complete"
@@ -17,7 +17,7 @@ function backupFiles() {
   done
 }
 
-if [ $UID -ne 0 ]
+if [ $EUID -ne 0 ]
 then
   echo "You must run this as root" >&2
   exit 1
@@ -28,7 +28,7 @@ backupUser=backup
 backupPasswordFile=/etc/backup/passwd
 backupHost=backup.internal.curnowtopia.com
 currentHost=$(hostname)
-backupModule=backup-${currentHost}
+backupModule=backup
 backupConfigDir=/etc/backup/backup.d
 rsyncFlags="--password-file ${backupPasswordFile} -aqc --perms --delete-after --relative"
 
